@@ -5,8 +5,8 @@
 
 package com.mikiyas.IFRSSystem.web;
 
-import com.eyob.IFRSSystem.domain.*;
-import com.eyob.IFRSSystem.repository.*;
+//import com.eyob.IFRSSystem.domain.*;
+//import com.eyob.IFRSSystem.repository.*;
 import com.mikiyas.IFRSSystem.web.dto.BillRegistrationDto;
 import com.mikiyas.IFRSSystem.web.dto.InvoiceRegistrationDto;
 import com.mikiyas.IFRSSystem.domain.*;
