@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html layout:decorator="adminLayout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>IFRS System</title><!-- Latest compiled and minified CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Reviewers</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th> Name  </th>
+                                <th> email  </th>
+                                <th> About </th>
+                                <th> enabled </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td><a th:href="@{/admin/ReviewerList/{user_id} (user_id=${user.user_id})}"><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></a></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.description}"></td>
+                                <td >
+                                    <span th:if="${user.enabled == true}"><img th:src="@{/images/check.svg}"></span>
+                                    <span th:unless="${user.enabled == true}"><img th:src="@{/images/remove.svg}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

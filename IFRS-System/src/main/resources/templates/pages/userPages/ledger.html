@@ -1,0 +1,118 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 30 - 12 - 2020
+  -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+    <style>
+        #buttonBlue{
+            background-color: white;
+            color: black;
+            border: 1px solid #008CBA;
+            padding: 8px 16px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        #buttonBlue:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Entity Ledgers</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Detail
+                                </th>
+                                <th>
+                                    Posted
+                                </th>
+                                <th>
+                                    Locked
+                                </th>
+                                <th>
+                                    Craeted
+                                </th>
+                                <th>
+                                    Last Update
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ledger : ${ledgers}">
+                                <td th:text="${ledger.name}"></td>
+                                <td >
+                                    <a th:href="@{/{entity_id}/journalEntry/{ledger_id} (entity_id=${entity_id}, ledger_id=${ledger.ledger_id})}"
+                                       class="btn btn-success btn-sm" id="buttonBlue" role="button">Journal Entries</a></td>
+                                </td>
+                                <td th:text="${ledger.posted}"></td>
+                                <td th:text="${ledger.locked}"></td>
+                                <td th:text="${ledger.created}"></td>
+                                <td th:text="${ledger.updated}"></td>
+                                <td>
+                                    <a th:href="@{/{entity_id}/ledgerEdit/{ledger_id} (entity_id=${entity_id}, ledger_id=${ledger.ledger_id})}"
+                                       class="btn btn-success btn-sm" role="button">Edit</a></td>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>
+

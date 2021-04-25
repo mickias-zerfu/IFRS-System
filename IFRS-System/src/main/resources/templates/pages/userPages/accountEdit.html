@@ -1,0 +1,60 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 16 - 12 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin">
+            <div class="card">
+                <div class="card-header" style="background: white">
+                    <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Edit Account information</h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <form class="forms-sample" id="accountEdit" th:action="@{/AccountEdit/{name}(name=${id})}"
+                          th:object="${accountEdited}" method="post" th:method="post">
+                        <div class="form-group">
+                            <label for="account">Account</label>
+                            <input type="text" id="account" class="form-control" th:field="*{account}"
+                                   value=th:text="${accountEdited.account}">
+                        </div>
+                        <div class="form-group">
+                            <label for="account_type">Account type</label>
+                            <input type="text" id="account_type" class="form-control" th:field="*{account_type}"
+                                   value=th:text="${accountEdited.account_type}">
+                        </div>
+                        <div class="form-group">
+                            <label for="current_amount">Balance</label>
+                            <input type="text" id="current_amount" class="form-control" th:field="*{current_amount}"  value="${accounEdited.current_amount}">
+                            <!--<span class="text-danger"  th:text="${alreadyRegisteredMessage}"></span>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="account_description">Account description</label>
+                            <input type="text" id="account_description" class="form-control" th:field="*{account_description}"
+                                   value=th:text="${accountEdited.account_description}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Update
+                            </button>
+                            <button class="btn btn-light" th:href="@{/userPages/Bankingmain}">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

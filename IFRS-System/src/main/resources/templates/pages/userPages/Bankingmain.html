@@ -1,0 +1,159 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 11 - 8 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a href="#here" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="fas fa-user-plus icon-lg" style="padding-top: 20px"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Accounts</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${productSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Add New Account
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a href="#here" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="fas fa-user-plus icon-lg" style="padding-top: 20px"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Recive Money</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${productSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Add Received Money
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a href="#here" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="fas fa-user-plus icon-lg" style="padding-top: 20px"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Bank Deposits</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${productSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Add New Deposit
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a href="#here" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="fas fa-user-plus icon-lg" style="padding-top: 20px"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Bills</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${productSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Pay Bills
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Chart of Accounts</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Account
+                                </th>
+                                <th>
+                                    Account type
+                                </th>
+                                <th>
+                                    Current amount
+                                </th>
+                                <th>
+                                    Account description
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="account1 : ${accounts}">
+                                <td th:text="${account1.account}"></td>
+                                <td th:text="${account1.account_type}"></td>
+                                <td th:text="${account1.current_amount}"></td>
+                                <td th:text="${account1.account_description}"></td>
+                                <td>
+
+                                    <a th:href="@{/AccountEdit/{name}(name=${account1.id})}"
+                                       class="btn btn-success btn-sm" role="button">Update</a>
+                                    <a th:href="@{/AccountDelete/{name}(name=${account1.account})}"
+                                       class="btn btn-danger btn-sm" role="button">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

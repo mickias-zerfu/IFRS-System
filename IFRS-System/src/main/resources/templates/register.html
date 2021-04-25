@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="newLayout">
+<head>
+    <title>IFRS Systems</title>
+</head>
+<body>
+<script>
+    function validateForm(){
+        let firstName=document.registerForm.firstName.value;
+        let lastName=document.registerForm.lastName.value;
+        let email=document.registerForm.email.value;
+        let password1=document.registerForm.password1.value;
+        let password2=document.registerForm.password2.value;
+        let first=document.getElementById("first");
+        let last=document.getElementById("last");
+        let emailError=document.getElementById("emailError");
+        let confirm=document.getElementById("confirm");
+        let pass=document.getElementById("pass");
+        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        var regName =  /^[A-Za-z]+$/;
+
+        if (!firstName.match(regName)){
+            first.innerHTML="Name can't contain Number";
+            return false;
+        }
+        if(!lastName.match(regName)){
+            last.innerHTML="Name can't contain Number";
+            return false;
+        }
+        if(!password1.match(passw)){
+            pass.innerHTML="Password must contain at least one numeric digit, one uppercase and one lowercase letter";
+            return false;
+        }
+        if(password1!==password2){
+            confirm.innerHTML="Password should be the same with the first password.";
+            return false;
+        }
+        var atposition=email.indexOf("@");
+        var dotposition=email.lastIndexOf(".");
+        if (atposition<1 || dotposition<atposition+2 || dotposition+2>=email.length){
+            emailError.innerHTML="Please enter a valid e-mail address \n atpostion:"+atposition+"\n dotposition:"+dotposition;
+            return false;
+        }
+    }
+</script>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card" style="margin: auto">
+            <div class="card">
+                <div class="card-body">
+                    <form name="registerForm" class="forms-sample"  th:action="@{/register}"
+                          th:object="${user}" method="post" id="register" enctype="multipart/form-data"
+                          onsubmit="return validateForm()" >
+                        <div class="form-group">
+                            <label for="firstName">First name</label>
+                            <input type="text" name="firstName" id="firstName" class="form-control" th:field="*{firstName}"
+                                   placeholder="Enter First Name" required="required">
+                            <span id="first" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last name</label>
+                            <input type="text" name="lastName" id="lastName" class="form-control" th:field="*{lastName}"
+                                   placeholder="Enter Last Name" required="required">
+                            <span id="last" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" name="email" id="email" class="form-control" th:field="*{email}"
+                                   placeholder="Email" required="required">
+                            <span id="emailError"  class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password1" id="password" class="form-control" th:field="*{password}"
+                                   placeholder="Password" required="required">
+                            <span id="pass" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password"  name="password2" id="confirmPassword" class="form-control"
+                                   th:field="*{confirmPassword}" placeholder="Confirm Password" required="required">
+                            <span id="confirm" class="alert-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">profile picture</label>
+                            <input type="file" id="image" name="image" class="form-control"
+                                   th:field="*{image}"  >
+                        </div>
+
+                        <div class="form-group">
+                            <input type="radio" id="male" name="role" value="ROLE_USER" th:field="*{role}" checked>
+                            <label for="male">Accountant</label><br>
+                            <input type="radio" id="female" name="role" value="REVIEWER" th:field="*{role}">
+                            <label for="female">Reviewer</label><br>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group"
+                                 th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
+                                <input id="terms" type="checkbox" th:field="*{terms}"/>  
+                                <label class="control-label" for="terms"> I agree with the <a
+                                        href="#">terms and conditions</a> for Registration.</label>
+                                <p class="error-message"
+                                   th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation
+                                    error</p>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success mr-2">
+                                        Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-light">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 29 - 12 - 2020
+  -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="entitiesLayout">
+<head>
+    <title>IFRS Systems</title>
+    <style>
+        #buttonBlue{
+            background-color: white;
+            color: black;
+            border: 1px solid #008CBA;
+            padding: 8px 16px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        #buttonBlue:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+        #buttonGreen{
+            background-color: white;
+            color: black;
+            border: 1px solid springgreen;
+            padding: 8px 16px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        #buttonGreen:hover {
+            background-color: springgreen;
+            color: white;
+        }
+        #buttonRed{
+            background-color: white;
+            color: black;
+            border: 1px solid red;
+            padding: 8px 16px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        #buttonRed:hover {
+            background-color: red;
+            color: white;
+        }
+        #buttonBlack{
+            background-color: white;
+            color: black;
+            border: 1px solid blue;
+            padding: 8px 16px;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        #buttonBlack:hover {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <div th:if="${isAdmin}">
+        <a th:href="@{/admin}"
+           class="btn btn-danger btn-sm" id="buttonBlack" role="button">Admin page</a>
+    </div>
+    <div class="row" >
+
+        <div class="row" >
+            <div class="col-lg-12 grid-margin stretch-card" style="background: transparent">
+                <div class="card">
+                    <div class="card-body" id="entityTable">
+                        <p class="card-description">
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="card-title">
+                                        Entity
+                                    </th>
+                                    <th class="card-title">
+                                        Address
+                                    </th>
+                                    <th class="card-title">
+                                        Created
+                                    </th>
+                                    <th> </th>
+                                    <th> </th>
+                                    <th> </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="entity : ${entities}">
+                                    <td th:text="${entity.name}"></td>
+                                    <td th:text="${entity.address_1}"></td>
+                                    <td th:text="${entity.created}"></td>
+                                    <td>
+                                        <a th:href="@{/{entity_id}(entity_id=${entity.entity_id})}"
+                                           class="btn btn-success btn-sm" id="buttonBlue" role="button">Dashboard</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/entityEdit/{entity_id}(entity_id=${entity.entity_id})}"
+                                           class="btn btn-success btn-sm" id="buttonGreen" role="button">Manage</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/entityDelete/{entity_id}(entity_id=${entity.entity_id})}"
+                                           class="btn btn-danger btn-sm" id="buttonRed" role="button">Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

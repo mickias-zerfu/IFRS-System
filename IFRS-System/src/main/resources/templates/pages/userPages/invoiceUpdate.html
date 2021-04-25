@@ -1,0 +1,122 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 7 - 1 - 2021
+  -->
+
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+
+    <h4 class="card-title">Update Invoice</h4>
+    <fieldset>
+        <form class="forms-sample" id="updateInvoice"
+              th:action="@{/{entity_id}/updateInvoice/{invoice_id}(entity_id=${entity_id}, invoice_id=${invoice_id})}"
+              th:object="${invoice}" method="post">
+            <div class="row">
+                <div class="col-lg-6 grid-margin">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Customer information.</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <h3 th:text="${customer.customer_name}"></h3>
+                            <p th:text="${customer.address_1}"></p>
+                            <p th:text="${customer.address_2}"></p>
+                            <p th:text="${customer.phone}"></p>
+                            <p th:text="${customer.email}"></p>
+                            <p th:text="${customer.website}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Invoice Amount and Terms</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <label>Invoice amount: </label>
+                            <p th:text="${invoice.amount_due}"></p>
+                            <lable>Invoice Date:</lable>
+                            <p th:text="${invoice.date}"></p>
+                            <label>Terms: </label>
+                            <p th:text="${invoice.terms}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Invoice State</h3>
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="form-group">
+                                <h5 class="card-title" for="cash_account">Amount Received</h5>
+                                <input type="text" class="form-control" th:field="*{amount_paid}"
+                                       placeholder="Cash Account">
+                            </div>
+                            <div class="form-group">
+                                <h5 class="card-title" for="receivable_account">Paid date</h5>
+                                <input type="date" class="form-control" th:field="*{updated}"
+                                       placeholder="YYYY-MM-DD">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Ledger State</h3>
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="form-group">
+                                <label th:text="${account_cash}"></label>
+                                <label th:text="${invoice.amount_paid}"></label>
+                            </div>
+                            <div class="form-group">
+                                <label th:text="${account_receivable}"></label>
+                                <label th:text="${amount_receivable}"></label>
+                            </div>
+                            <div class="form-group">
+                                <label th:text="${account_payable}"></label>
+                                <label th:text="${amount_payable}"></label>
+                            </div>
+                            <div class="form-group">
+                                <label th:text="${account_earning}"></label>
+                                <label th:text="${amount_earning}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="padding-top: 10px">
+                <button type="submit" class="btn btn-success mr-2">
+                    Save
+                </button>
+                <button class="btn btn-light">Cancel</button>
+            </div>
+
+        </form>
+    </fieldset>
+</div>
+</section>
+</body>
+
+
+</html>

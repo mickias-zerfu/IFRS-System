@@ -1,0 +1,101 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 30 - 12 - 2020
+  -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a th:href="@{/{entity_id}/addVendor(entity_id=${entity_id})}" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="fas fa-user-plus icon-lg" style="padding-top: 20px"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Vendors</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${vendorSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Add new Vendor
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Vendors List</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Vendor
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="vendor : ${vendors}">
+                                <td th:text="${vendor.vendor_name}"></td>
+                                <td th:text="${vendor.address_1}"></td>
+                                <td><a th:href="@{/{entity_id}/vendorEdit/{vendor_id} (entity_id=${entity_id}, vendor_id=${vendor.vendor_id})}"
+                                       class="btn btn-success btn-sm" role="button">Update</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>
+

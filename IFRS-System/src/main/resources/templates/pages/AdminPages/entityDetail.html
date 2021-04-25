@@ -1,0 +1,82 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 20 - 1 - 2021
+  -->
+
+<!DOCTYPE html>
+<html layout:decorator="adminLayout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>IFRS System</title><!-- Latest compiled and minified CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+</head>
+<body>
+<section layout:fragment="content">
+    <section>
+        <div class="top-container col">
+            <div class="row ">
+                <div class="col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header" style="background-color: white;">
+                            <h3 style="font-family: sans-serif"><span th:text="${entity.name}"></span></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Created On </label>
+                                <span th:text="${entity.created}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Address 1 </label>
+                                <span th:text="${entity.address_1}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Address 2 </label>
+                                <span th:text="${entity.address_2}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone No </label>
+                                <span th:text="${entity.phone}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Web site </label>
+                                <span th:text="${entity.website}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Country </label>
+                                <span th:text="${entity.country}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <fieldset>
+
+                        <div class="card-header" style="background-color: white;">
+                            <h3 style="font-family: sans-serif">Change Account admin</h3>
+                        </div>
+                        <form class="forms-sample" id="changeAdmin"
+                              th:action="@{/admin/changeAdmin/{entity_id} (entity_id=${entity.entity_id})}"
+                              th:object="${entity}" method="post">
+
+                            <div class="col-md-6 col-sm-12">
+                                <input size="40" type="text" list="term_list" id="name" class="form-control"
+                                       th:field="*{city}"
+                                       placeholder="Select Accountant">
+                                <datalist id="term_list">
+                                    <option th:each="user : ${users}">
+                                        <p th:text="${user}"></p></option>
+                                </datalist>
+                                <button type="submit" class="btn btn-success mr-2">Change</button>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+            </div>
+
+    </section>
+</section>
+
+</body>
+</html>

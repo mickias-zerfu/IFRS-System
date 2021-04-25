@@ -1,0 +1,80 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 1 - 1 - 2021
+  -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card" style="margin: auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" id="here">Create Account</h4>
+                    <form class="forms-sample" id="addAccount" th:action="@{/{entity_id}/addAccount(entity_id=${entity_id})}"
+                          th:object="${account}" method="post">
+                        <div class="form-group">
+                            <label for="name">Account Code:</label>
+                            <input type="text" id="code" class="form-control" th:field="*{code}"
+                                   value=th:text="${account.name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Account Name:</label>
+                            <input type="text" id="name" class="form-control" th:field="*{name}"
+                                   value=th:text="${account.name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Account Role:</label>
+                            <input type="text" id="role" class="form-control" th:field="*{role}"
+                                   value=th:text="${account.role}">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Account Balance Type:</label>
+                            <input type="text" id="city" class="form-control" th:field="*{balance_type}"
+                                   value=th:text="${account.balance_type}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Submit
+                            </button>
+                            <button class="btn btn-light">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>

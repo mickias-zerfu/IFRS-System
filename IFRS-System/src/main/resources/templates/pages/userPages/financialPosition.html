@@ -1,0 +1,792 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 17 - 1 - 2021
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IFRS System</title>
+    <style>
+        :root {
+            --bleeding: 0.5cm;
+            --margin: 1cm;
+        }
+
+        .lalign {
+            text-align: left;
+        }
+
+        .sfp {
+            width: 100%;
+            padding-left: 20px;
+            border-spacing: 8px;
+            text-align: right;
+        }
+
+        .total {
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            text-align: right;
+        }
+
+        .tttotal {
+            border-bottom: 1px solid black;
+            text-align: right;
+        }
+
+        .ttotal {
+            border-bottom-style: double;
+            text-align: right;
+        }
+
+        .sfpth {
+            column-width: 125px;
+        }
+
+        .lilpadding {
+            padding-left: 25px;
+            text-align: left;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0 auto;
+            padding: 0;
+            background: rgb(204, 204, 204);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page {
+            display: inline-block;
+            position: relative;
+            height: 297mm;
+            width: 210mm;
+            font-size: 12pt;
+            margin: 2em auto;
+            padding: calc(var(--bleeding) + var(--margin));
+            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+            background: white;
+        }
+
+        @media screen {
+            .page::after {
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                width: calc(100% - var(--bleeding) * 2);
+                height: calc(100% - var(--bleeding) * 2);
+                margin: var(--bleeding);
+
+                pointer-events: none;
+                z-index: 9999;
+            }
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                overflow: hidden;
+            }
+        }
+
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:active {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body style="--bleeding: 0.5cm;--margin: 1cm;">
+<div class="page">
+    <h1 th:text="${entity_name}"></h1>
+    <h2>Consolidated statement of comprehensive income at <span th:text="${Edate}"></span></h2>
+    <table class="sfp">
+        <tr>
+            <th>
+                <div class="sfpth"></div>
+            </th>
+            <th><h4><b>Notes</b></h4></th>
+            <th><h4 th:text="${#dates.year(Edate) - 1}"></h4></th>
+            <th><h4 th:text="${#dates.year(Edate)}">></h4></th>
+        </tr>
+        <tr>
+            <td class="lalign"><b></b></td>
+            <td></td>
+            <td><b>$</b></td>
+            <td><b>$</b></td>
+        </tr>
+
+        <tr>
+            <td class="lalign"><b></b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Revenue</td>
+            <td></td>
+            <td th:text="${ieprev.revenue}"></td>
+            <td th:text="${iecurr.revenue}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Cost of Goods Sold</td>
+            <td><a href="#10">10</a></td>
+            <td th:text="${ieprev.costOfGoodsSold}"></td>
+            <td th:text="${iecurr.costOfGoodsSold}">(20,000)</td>
+        </tr>
+
+        <tr>
+            <td class="lalign"><b>Operating Expense:</b></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td class="lilpadding">Advertising Cost</td>
+            <td><a href="#11">11</a></td>
+            <td th:text="${ieprev.advertsingExpense}"></td>
+            <td th:text="${iecurr.advertsingExpense}"></td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Freight Cost</td>
+            <td><a href="#12">12</a></td>
+            <td th:text="${ieprev.frieghtCost}"></td>
+            <td th:text="${iecurr.frieghtCost}"></td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Repair and Maintainance</td>
+            <td><a href="#13">13</a></td>
+            <td th:text="${ieprev.maintainanceCost}"></td>
+            <td th:text="${iecurr.maintainanceCost}"></td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Employee Salaries and Benefits</td>
+            <td><a href="#14">14</a></td>
+            <td th:text="${ieprev.employeeExpense}"></td>
+            <td th:text="${iecurr.employeeExpense}"></td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Other Operating Expense</td>
+            <td><a href="#15">15</a></td>
+            <td th:text="${ieprev.otherOperatingExpense}"></td>
+            <td th:text="${iecurr.otherOperatingExpense}"></td>
+        </tr>
+
+
+        <tr>
+            <td class="lalign">Depreciation and Amortization</td>
+            <td><a href="#16">16</a></td>
+            <td th:text="${ieprev.depreciationAmortization}"></td>
+            <td th:text="${iecurr.depreciationAmortization}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Other Expense</td>
+            <td><a href="#17">17</a></td>
+            <td th:text="${ieprev.otherExpense}"></td>
+            <td th:text="${iecurr.otherExpense}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Interest Expense</td>
+            <td><a href="#18">18</a></td>
+            <td th:text="${ieprev.interestExpense}"></td>
+            <td th:text="${iecurr.interestExpense}"></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Profit Before Tax</b></td>
+            <td><a href="#18">18</a></td>
+            <td class="tttotal" th:text="${ieprev.profitBeforeTax}"><b></b></td>
+            <td class="tttotal" th:text="${iecurr.profitBeforeTax}"><b></b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Income Tax</td>
+            <td><a href="#20">20</a></td>
+            <td th:text="${ieprev.incomeTax}"></td>
+            <td th:text="${iecurr.incomeTax}"></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Profit For The Year</b></td>
+            <td><a href=""></a></td>
+            <td class="tttotal" th:text="${ieprev.profitForYear}"><b></b></td>
+            <td class="tttotal" th:text="${iecurr.profitForYear}"><b></b></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Other Comprehensive income:</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="lalign">Available for Sale</td>
+            <td><a href=""></a></td>
+            <td th:text="${ieprev.availableforsale}"></td>
+            <td th:text="${iecurr.availableforsale}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Unrealised Gains/Losses</td>
+            <td><a href=""></a></td>
+            <td th:text="${ieprev.unrealized}"></td>
+            <td th:text="${iecurr.unrealized}"></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Total Comprehensive income</b></td>
+            <td><a href=""></a></td>
+            <td class="ttotal" th:text="${ieprev.totalIncome}"><b></b></td>
+            <td class="ttotal" th:text="${iecurr.totalIncome}"><b></b></td>
+        </tr>
+    </table>
+</div>
+
+<div class="page">
+    <!-- Your content here -->
+    <h1 th:text="${entity_name}"></h1>
+    <h2>Consolidated statement of financial position at <span th:text="${Edate}"></span></h2>
+    <table class="sfp">
+        <tr>
+            <th>
+                <div class="sfpth"></div>
+            </th>
+            <th><h4><b>Notes</b></h4></th>
+            <th><h4 th:text="${#dates.year(Edate) - 1}"></h4></th>
+            <th><h4 th:text="${#dates.year(Edate)}">></h4></th>
+        </tr>
+        <tr>
+            <td class="lalign"><b>ASSETS</b></td>
+            <td></td>
+            <td><b>$</b></td>
+            <td><b>$</b></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Current assets</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">cash</td>
+            <td></td>
+            <td th:text="${fpprev.CCE}"></td>
+            <td th:text="${fpcurr.CCE}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">trade and other receivables</td>
+            <td><a href="#10">10</a></td>
+            <td th:text="${fpprev.TOR}"></td>
+            <td th:text="${fpcurr.TOR}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">inventories</td>
+            <td><a href="#11">11</a></td>
+            <td th:text="${fpprev.Inve}"></td>
+            <td th:text="${fpcurr.Inve}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Pre-paid Expenses</td>
+            <td><a href="#11">11</a></td>
+            <td th:text="${fpprev.ppE}"></td>
+            <td th:text="${fpcurr.ppE}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="total" th:text="${fpprev.currasset}"></td>
+            <td class="total" th:text="${fpcurr.currasset}"></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Non-current assets</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">investment in associate</td>
+            <td><a href="#12">12</a></td>
+            <td th:text="${fpprev.InvestA}"></td>
+            <td th:text="${fpcurr.InvestA}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">property, plant and equipment</td>
+            <td><a href="#13">13</a></td>
+            <td th:text="${fpprev.PPE}"></td>
+            <td th:text="${fpcurr.PPE}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">intangible assets</td>
+            <td><a href="#14">14</a></td>
+            <td th:text="${fpprev.IA}"></td>
+            <td th:text="${fpcurr.IA}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">deffered tax assets</td>
+            <td><a href="#15">15</a></td>
+            <td th:text="${fpprev.DTA}"></td>
+            <td th:text="${fpcurr.DTA}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="total" th:text="${fpprev.noncurrasset}"></td>
+            <td class="total" th:text="${fpcurr.noncurrasset}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Total assets</td>
+            <td></td>
+            <td class="ttotal" th:text="${fpprev.asset}"></td>
+            <td class="ttotal" th:text="${fpcurr.asset}"></td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr>
+            <td class="lalign"><b>LIABILITIES AND EQUITY</b></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Current liabilities</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Trade payables</td>
+            <td><a href="#17">17</a></td>
+            <td th:text="${fpprev.TP}"></td>
+            <td th:text="${fpcurr.TP}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Interest payable</td>
+            <td><a href="#7">7</a></td>
+            <td th:text="${fpprev.IP}">0</td>
+            <td th:text="${fpcurr.IP}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Current tax liability</td>
+            <td></td>
+            <td th:text="${fpprev.CTP}"></td>
+            <td th:text="${fpcurr.CTP}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Provision for warranty obligations</td>
+            <td><a href="#18">18</a></td>
+            <td th:text="${fpprev.PWO}"></td>
+            <td th:text="${fpcurr.PWO}">0</td>
+        </tr>
+        <tr>
+            <td class="lalign">Current portion of employee benefit obligations</td>
+            <td><a href="#19">19</a></td>
+            <td th:text="${fpprev.STEP}"></td>
+            <td th:text="${fpcurr.STEP}">0</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="total" th:text="${fpprev.currliab}"></td>
+            <td class="total" th:text="${fpcurr.currliab}"></td>
+        </tr>
+    </table>
+    <!-- End of your content -->
+</div>
+
+<!-- financial position -->
+
+<div class="page">
+    <!-- Your content here -->
+    <i>...continued</i>
+    <h2>Consolidated statement of financial position at <span th:text="${Edate}"></span></h2>
+    <table class="sfp">
+        <tr>
+            <th>
+                <div class="sfpth"></div>
+            </th>
+            <th><h4><b>Notes</b></h4></th>
+            <th><h4 th:text="${#dates.year(Edate) - 1}"></h4></th>
+            <th><h4 th:text="${#dates.year(Edate)}">></h4></th>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Non-current liabilities</b></td>
+            <td></td>
+            <td><b>CU</b></td>
+            <td><b>CU</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Bank loan</td>
+            <td><a href="#16">16</a></td>
+            <td th:text="${fpprev.BL}"></td>
+            <td th:text="${fpcurr.BL}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Long-term employee benefit obligations</td>
+            <td><a href="#19">19</a></td>
+            <td th:text="${fpprev.LTEP}"></td>
+            <td th:text="${fpcurr.LTEP}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="total" th:text="${fpprev.noncurrliab}"></td>
+            <td class="total" th:text="${fpcurr.noncurrliab}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Total liabilities</td>
+            <td></td>
+            <td class="tttotal" th:text="${fpprev.liab}"></td>
+            <td class="tttotal" th:text="${fpcurr.liab}"></td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td class="lalign"><b>Equity</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Share capital</td>
+            <td><a href="#22">22</a></td>
+            <td th:text="${fpprev.SC}"></td>
+            <td th:text="${fpcurr.SC}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Retained earnings</td>
+            <td><a href="#4">4</a></td>
+            <td th:text="${fpprev.RE}"></td>
+            <td th:text="${fpcurr.RE}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="total" th:text="${fpprev.other}"></td>
+            <td class="total" th:text="${fpcurr.other}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Total liabilities and equity</td>
+            <td></td>
+            <td class="ttotal" th:text="${fpprev.asset}"></td>
+            <td class="ttotal" th:text="${fpcurr.asset}"></td>
+        </tr>
+    </table>
+    <!-- End of your content -->
+</div>
+
+<!-- change in equity -->
+
+<div class="page">
+    <!-- Your content here -->
+    <h2>Consolidated statement of Change in Equity and other comprehensive income at <span th:text="${Edate}"></span>
+    </h2>
+    <table class="sfp">
+        <div>
+            <tr>
+                <th>
+                    <div class="sfpth"></div>
+                </th>
+                <th><h4><b>Notes</b></h4></th>
+                <th><h4>Share Capital</h4></th>
+                <th><h4>Retained earning</h4></th>
+                <th><h4>Total</h4></th>
+            </tr>
+            <tr>
+                <td class="lalign">Net Income</td>
+                <td><a href="#16">16</a></td>
+                <td></td>
+                <td th:text="${ceprev.netIncome}"></td>
+                <td th:text="${ceprev.netIncome}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign">Dividents</td>
+                <td><a href="#19">19</a></td>
+                <td></td>
+                <td th:text="${ceprev.dividents}"></td>
+                <td th:text="${ceprev.dividents}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign">Issue of shares</td>
+                <td><a href="#16">17</a></td>
+                <td th:text="${ceprev.issues}"></td>
+                <td></td>
+                <td th:text="${ceprev.issues}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign">Repurchase of shares</td>
+                <td><a href="#19">20</a></td>
+                <td class="tttotal" th:text="${ceprev.repurchase}"></td>
+                <td class="tttotal"></td>
+                <td class="tttotal" th:text="${ceprev.repurchase}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign"><b><span th:text="${#dates.day(Edate)}"> </span> <span
+                        th:text="${#dates.monthNameShort(Edate)}"> </span><span
+                        th:text="${#dates.year(Edate) - 1}"></span></b></b></b></td>
+                <td></td>
+                <td class="ttotal" th:text="${ceprev.SC}"><b></b></b></td>
+                <td class="ttotal" th:text="${ceprev.RE}"><b></b></b></td>
+                <td class="ttotal" th:text="${ceprev.total}">><b></b></b></td>
+            </tr>
+        </div>
+        <div>
+            <tr>
+                <td class="lalign">Net Income</td>
+                <td><a href="#16">16</a></td>
+                <td></td>
+                <td th:text="${cecurr.netIncome}"></td>
+                <td th:text="${cecurr.netIncome}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign">Dividents</td>
+                <td><a href="#19">19</a></td>
+                <td></td>
+                <td th:text="${cecurr.dividents}"></td>
+                <td th:text="${cecurr.dividents}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign">Issue of shares</td>
+                <td><a href="#16">17</a></td>
+                <td th:text="${cecurr.issues}"></td>
+                <td></td>
+                <td th:text="${cecurr.issues}"><b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign">Repurchase of shares</td>
+                <td><a href="#19">20</a></td>
+                <td class="tttotal" th:text="${cecurr.repurchase}"></td>
+                <td class="tttotal"></td>
+                <td class="tttotal" th:text="${cecurr.repurchase}"><b></b></b></td>
+            </tr>
+            <tr>
+                <td class="lalign"><b><span th:text="${#dates.day(Edate)}"> </span> <span
+                        th:text="${#dates.monthNameShort(Edate)}"> </span> <span th:text="${#dates.year(Edate)}"></span></b></b>
+                </td>
+                <td></td>
+                <td class="ttotal" th:text="${cecurr.SC}"><b></b></b></td>
+                <td class="ttotal" th:text="${cecurr.RE}"><b></b></b></td>
+                <td class="ttotal" th:text="${cecurr.total}">><b></b></b></td>
+            </tr>
+        </div>
+    </table>
+    <!-- End of your content -->
+</div>
+
+<!-- cash flow -->
+
+<div class="page">
+    <!-- Your content here -->
+    <h1 th:text="${entity_name}"></h1>
+    <h2>Consolidated statement of cash flows for the year ended <span th:text="${Edate}"></span></h2>
+    <table class="sfp">
+        <tr>
+            <th>
+                <div class="sfpth"></div>
+            </th>
+            <th>
+                <h4><b>Notes</b></h4>
+            </th>
+            <th><h4 th:text="${#dates.year(Edate) - 1}"></h4></th>
+            <th><h4 th:text="${#dates.year(Edate)}">></h4></th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><b>$</b></td>
+            <td><b>$</b></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Cash flows from operating activities</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Profit for the year</td>
+            <td></td>
+            <td th:text="${cfprev.profit_for_the_year}">cf.get</td>
+            <td th:text="${cfcurr.profit_for_the_year}">cf</td>
+        </tr>
+        <tr>
+            <td class="lalign">Cash receipts from customers</td>
+            <td></td>
+            <td th:text="${cfprev.Cash_receipts_from_customers}">cf.get</td>
+            <td th:text="${cfcurr.Cash_receipts_from_customers}">cx</td>
+        </tr>
+        <tr>
+            <td class="lalign">Payments to employees</td>
+            <td></td>
+            <td th:text="${cfprev.Payments_to_employees}"></td>
+            <td th:text="${cfcurr.Payments_to_employees}">x</td>
+        </tr>
+        <tr>
+            <td class="lalign">Payments to suppliers of goods</td>
+            <td></td>
+            <td th:text="${cfprev.Payments_to_suppliers_of_goods}"></td>
+            <td th:text="${cfcurr.Payments_to_suppliers_of_goods}"></td>
+        </tr>
+        <tr>
+            <td class="lalign">Adjustments for non-cash income and expenses:</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Depreciation</td>
+            <td></td>
+            <td th:text="${cfprev.Depreciation}">cf.()</td>
+            <td th:text="${cfcurr.Depreciation}">cf</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Amortisation</td>
+            <td></td>
+            <td th:text="${cfprev.Amortisation}">cf.</td>
+            <td th:text="${cfcurr.Amortisation}">cf</td>
+        </tr>
+
+        <tr>
+            <td class="lalign">Cash flow included in investing activities:</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Gain on sale of equipment</td>
+            <td></td>
+            <td th:text="${cfprev.Gain_on_sale_of_equipment}">cf.get</td>
+            <td th:text="${cfcurr.Gain_on_sale_of_equipment}">cf.</td>
+        </tr>
+        <tr>
+            <td class="lalign">Changes in operating assets and liabilities</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Decrease (increase) in trade and other receivables</td>
+            <td></td>
+            <!-- <td></td> -->
+            <td th:text="${cfprev.Decrease_increase_in_trade_and_other_receivables}">z</td>
+            <td th:text="${cfcurr.Decrease_increase_in_trade_and_other_receivables}">z</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Decrease (increase) in inventories</td>
+            <td></td>
+            <!-- <td></td> -->
+            <td th:text="${cfprev.Decrease_increase_in_inventories}">s</td>
+            <td th:text="${cfcurr.Decrease_increase_in_inventories}">s</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Increase (decrease) in Account and trade payables (c)</td>
+            <td></td>
+            <!-- <td></td> -->
+            <td th:text="${cfprev.Increase_decrease_in_trade_payables}">s</td>
+            <td th:text="${cfcurr.Increase_decrease_in_trade_payables}">s</td>
+        </tr>
+        <tr>
+            <td class="lilpadding">Increase in current and long-term employee benefit payable</td>
+            <td></td>
+            <!-- <td>cf.get</td> -->
+            <td th:text="${cfprev.Increase_decrease_in_current_and_long_term_employee_benefit_payable}">cf.</td>
+            <td th:text="${cfcurr.Increase_decrease_in_current_and_long_term_employee_benefit_payable}">cf.</td>
+        </tr>
+        <tr>
+            <td class="lalign">Net cash from operating activities</td>
+            <td></td>
+            <td class="total" th:text="${cfprev.Net_cash_from_operating_activities}"></td>
+            <td class="total" th:text="${cfcurr.Net_cash_from_operating_activities}"></td>
+        </tr>
+        <tr>
+            <td class="lalign"><b>Cash flows from investing activities</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Proceeds from sale of equipment</td>
+            <td></td>
+            <td th:text="${cfprev.Proceeds_from_sale_of_equipment}">cf.gett</td>
+            <td th:text="${cfcurr.Proceeds_from_sale_of_equipment}">cf.gett</td>
+        </tr>
+        <tr>
+            <td class="lalign">Purchases of equipment</td>
+            <td></td>
+            <td th:text="${cfprev.Purchases_of_equipment}">cf.get</td>
+            <td th:text="${cfcurr.Purchases_of_equipment}">cf.get</td>
+        </tr>
+        <tr>
+            <td class="lalign">Net cash used in investing activities</td>
+            <td></td>
+            <td class="total" th:text="${cfprev.Net_cash_used_in_investing_activities}"></td>
+            <td class="total" th:text="${cfcurr.Net_cash_used_in_investing_activities}"></td>
+        </tr>
+    </table>
+    <!-- End of your content -->
+</div>
+<div class="page">
+    <!-- Your content here -->
+    <i>...continued</i>
+    <h2>Consolidated statement of cash flows for the year ended <span th:text="${Edate}"></span></h2>
+    <table class="sfp">
+        <tr>
+            <th>
+                <div class="sfpth"></div>
+            </th>
+            <th>
+                <h4><b>Notes</b></h4>
+            </th>
+            <th><h4 th:text="${#dates.year(Edate) - 1}"></h4></th>
+            <th><h4 th:text="${#dates.year(Edate)}">></h4></th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><b>$</b></td>
+            <td><b>$</b></td>
+        </tr>
+
+        <tr>
+            <td class="lalign"><b>Cash flows from financing activities</b></td>
+        </tr>
+        <tr>
+            <td class="lalign">Payment of finance lease liabilities</td>
+            <td></td>
+            <td th:text="${cfprev.Payment_of_finance_lease_liabilities}">cf.get</td>
+            <td th:text="${cfcurr.Payment_of_finance_lease_liabilities}">cf.get</td>
+        </tr>
+        <tr>
+            <td class="lalign">Repayment of borrowings</td>
+            <td></td>
+            <td th:text="${cfprev.Repayment_of_borrowings}">cfs</td>
+            <td th:text="${cfcurr.Repayment_of_borrowings}">cfs</td>
+        </tr>
+        <tr>
+            <td class="lalign">Dividends paid</td>
+            <td></td>
+            <td th:text="${cfprev.Dividends_paid}">cf.get</td>
+            <td th:text="${cfcurr.Dividends_paid}">cf.get</td>
+        </tr>
+        <tr>
+            <td class="lalign">Net cash used in financing activities</td>
+            <td></td>
+            <td class="total" th:text="${cfprev.Net_cash_used_in_financing_activities}">cf.get</td>
+            <td class="total" th:text="${cfcurr.Net_cash_used_in_financing_activities}">cf.get</td>
+        </tr>
+        <tr>
+            <td class="lalign">Net increase (decrease) in cash and cash equivalents</td>
+            <td></td>
+            <td th:text="${cfprev.Net_increase_decrease_in_cash_and_cash_equivalents}">cf.get</td>
+            <td th:text="${cfcurr.Net_increase_decrease_in_cash_and_cash_equivalents}">cf.get</td>
+        </tr>
+        <tr>
+            <td class="lalign">Cash and cash equivalents at beginning of year</td>
+            <td></td>
+            <td class="tttotal" th:text="${cfprev.Cash_and_cash_equivalents_at_beginning_of_year}">cf.get</td>
+            <td class="tttotal" th:text="${cfcurr.Cash_and_cash_equivalents_at_beginning_of_year}">cf.get</td>
+        </tr>
+        <tr>
+            <td class="lalign">Cash and cash equivalents at end of year</td>
+            <td><a href="#23"></a></td>
+            <td class="ttotal" th:text="${cfprev.Cash_and_cash_equivalents_at_end_of_year}">cf.get</td>
+            <td class="ttotal" th:text="${cfcurr.Cash_and_cash_equivalents_at_end_of_year}">cf.get</td>
+        </tr>
+    </table>
+    <!-- End of your content -->
+</div>
+</body>
+</html>

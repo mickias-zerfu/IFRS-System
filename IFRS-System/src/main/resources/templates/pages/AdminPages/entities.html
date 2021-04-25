@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html layout:decorator="adminLayout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>IFRS System</title><!-- Latest compiled and minified CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th> Name </th>
+                    <th> Address </th>
+                    <th> Phone No </th>
+                    <th> Email </th>
+                    <th> Website </th>
+                    <th> Admin </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entity : ${entities}">
+                    <td ><a th:href="@{/admin/entities/{entity_id} (entity_id=${entity.entity_id})}"><span th:text="${entity.name}"></span></a></td>
+                    <td th:text="${entity.address_1}"></td>
+                    <td th:text="${entity.phone}"></td>
+                    <td th:text="${entity.email}"></td>
+                    <td th:text="${entity.website}"></td>
+                    <td th:text="${entity.admin_id}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

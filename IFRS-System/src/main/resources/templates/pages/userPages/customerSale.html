@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a href="#here" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="fas fa-user-plus icon-lg" style="padding-top: 20px"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Customers</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${customerSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Add New Customer
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <a href="#orderTable" style="text-decoration: none">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <i class="mdi mdi-receipt text-warning icon-lg"></i>
+                            </div>
+                            <div class="float-right">
+                                <p class="mb-0 text-right">Orders</p>
+                                <div class="fluid-container">
+                                    <h3 class="font-weight-medium text-right mb-0" th:text="${orderSize}"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">
+                            <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <div class="card-body">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i class="mdi mdi-poll-box text-success icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">Sales</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-medium text-right mb-0">5693</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <div class="card-body">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i class="mdi mdi-account-location text-info icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">Customers</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-medium text-right mb-0">5</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Customers List</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Customer_ID
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Account No
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    Telephone
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    fax
+                                </th>
+                                <th>
+                                    Customer since
+                                </th>
+                                <th>
+                                    last Invoice date
+                                </th>
+                                <th>
+                                    last Invoice ammount
+                                </th>
+                                <th>
+                                    last Payment date
+                                </th>
+                                <th>
+                                    last Payment Amount
+                                </th>
+                                <th>
+                                    Credit
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="custom : ${customers}">
+                                <td th:text="${custom.customer_id}"></td>
+                                <td th:text="${custom.name}"></td>
+                                <td th:text="${custom.account_no}"></td>
+                                <td th:text="${custom.address}"></td>
+                                <td th:text="${custom.phone}"></td>
+                                <td th:text="${custom.email}"></td>
+                                <td th:text="${custom.fax}"></td>
+                                <td th:text="${custom.customer_since}"></td>
+                                <td th:text="${custom.lastInvoiceDate}"></td>
+                                <td th:text="${custom.lastInvoice}"></td>
+                                <td th:text="${custom.lastPaymentDate}"></td>
+                                <td th:text="${custom.lastPayment}"></td>
+                                <td th:text="${custom.credit}"></td>
+                                <td>
+                                    <a th:href="@{/customerEdit/{customer_id}(customer_id=${custom.customer_id})}"
+                                       class="btn btn-success btn-sm" role="button">Update</a>
+                                    <a th:href="@{/customerDelete/{customer_id}(customer_id=${custom.customer_id})}"
+                                       class="btn btn-danger btn-sm" role="button">Delete</a>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card" style="margin: auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" id="here">New Customer</h4>
+                    <form class="forms-sample" id="addCustomer" th:action="@{/add}"
+                          th:object="${newCustomer}" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" th:field="*{name}"
+                                   placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="account_no">account_no</label>
+                            <input type="text" id="account_no" class="form-control" th:field="*{account_no}"
+                                   placeholder="Enter Lastname">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" class="form-control" th:field="*{email}">
+                            <!--<span class="text-danger"  th:text="${alreadyRegisteredMessage}"></span>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telephone</label>
+                            <input type="text" id="phone" class="form-control" th:field="*{phone}"
+                                   placeholder="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="fax">fax</label>
+                            <input type="text" id="fax" class="form-control" th:field="*{fax}"
+                                   placeholder="fax">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" class="form-control" th:field="*{address}"
+                                   placeholder="address">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Submit
+                            </button>
+                            <button class="btn btn-light">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 20px">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body" id="orderTable">
+                    <h4 class="card-title">Order List</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Order_ID
+                                </th>
+                                <th>
+                                    Customer_ID
+                                </th>
+                                <th>
+                                    Freight
+                                </th>
+                                <th>
+                                    Ammount
+                                </th>
+                                <th>
+                                    Order date
+                                </th>
+                                <th>
+                                    Shipment date
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.order_id}"></td>
+                                <td th:text="${order.customer_id}"></td>
+                                <td th:text="${order.freight}"></td>
+                                <td th:text="${order.amount}"></td>
+                                <td th:text="${order.order_date}"></td>
+                                <td th:text="${order.shipment_date}"></td>
+                                <td>
+                                    <a th:href="@{/orderEdit/{order_id}(order_id=${order.order_id})}"
+                                       class="btn btn-success btn-sm" role="button">Update info</a>
+                                    <a th:href="@{/orderEdit1/{order_id}(order_id=${order.order_id})}"
+                                       class="btn btn-success btn-sm" role="button">Update Products</a>
+                                    <a th:href="@{/sellInvoice/{order_id}(order_id=${order.order_id})}"
+                                       class="btn btn-primary btn-sm" role="button">Generate inVoice</a>
+                                    <a th:href="@{/orderDelete/{order_id}(order_id=${order.order_id})}"
+                                       class="btn btn-danger btn-sm" role="button">Delete</a>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card" style="margin: auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" id="hereOrder">New Order</h4>
+                    <form class="forms-sample" id="addOrder" th:action="@{/add}"
+                          th:object="${newOrder}" method="post">
+                        <div class="form-group">
+                            <label for="name">Customer Id</label>
+                            <input type="text" id="customer1" class="form-control" th:field="*{customer1}"
+                                   placeholder="Enter Id">
+                        </div>
+                        <div class="form-group">
+                            <label for="order_date1">Order date</label>
+                            <input type="text" id="order_date1" class="form-control" th:field="*{order_date1}"
+                                   >
+                        </div>
+                        <div class="form-group">
+                            <label for="shipment_date1">Shipment Date</label>
+                            <input type="text" id="shipment_date1" class="form-control" th:field="*{shipment_date1}">
+                            <!--<span class="text-danger"  th:text="${alreadyRegisteredMessage}"></span>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="freight1">Freight</label>
+                            <input type="text" id="freight1" class="form-control" th:field="*{freight1}"
+                                   placeholder="Phone">
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Product
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr th:each="neworder, stat : ${newOrder.ordersList1}">
+                                    <td><input style="border: none"
+                                               th:filed="*{ordersList1[__${stat.index}__].name}"/></td>
+                                    <td><input style="border: none" th:filed="*{ordersList[__${stat.index}__].quantity}"/></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td>freight</td>
+                                    <td><input style="border: none" th:field="*{freight1}"/></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Submit
+                            </button>
+                            <button class="btn btn-light">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>

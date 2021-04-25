@@ -1,0 +1,79 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 16 - 12 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="reviewerLayout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-6 grid-margin">
+            <div class="card">
+                <div class="card-header" style="background: white">
+                    <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Report</h3>
+                </div>
+                <div class="card-body">
+
+                            <span th:if="${reviewer.approve == true}">
+                                 <fieldset>
+                        <form class="forms-sample" id="report"
+                              th:action="@{/{entity_id}/report (entity_id=${reviewer.entity_id})}"
+                              th:object="${report}" method="post">
+                                    <div class="form-group">
+                                <h5 class="card-title" for="cash_account">From:</h5>
+                                <input type="date" class="form-control" th:field="*{date_start}"
+                                       placeholder="YYYY-MM-DD" th:attr="max=${reviewer.to_date}, min=${reviewer.from_date}">
+                            </div>
+                            <div class="form-group">
+                                <h5 class="card-title" for="receivable_account">To:</h5>
+                                <input type="date" class="form-control" th:field="*{date_end}"
+                                        th:attr="max=${reviewer.to_date} , min=${reviewer.from_date}" placeholder="YYYY-MM-DD">
+                            </div>
+                                    <button type="submit" class="btn btn-success mr-2">View Report</button>
+                        </form>
+                    </fieldset>
+                            </span>
+                                <span th:unless="${reviewer.approve == true}">
+                                    <form class="forms-sample" id="request"
+                                          th:action="@{/{user_id}/reviewer/request (user_id=${user.user_id})}"
+                                          th:object="${request}" method="post">
+                                     <div class="form-group">
+                                <h5 class="card-title" for="cash_account">Select Entity</h5>
+                                <input type="text" list="term_list" id="terms" class="form-control" th:field="*{entity_id}"
+                                       placeholder="--------">
+                                <datalist id="term_list">
+                                    <option th:each="entity : ${entities}">
+                                        <p th:text="${entity.name}"></p></option>
+                                </datalist>
+                            </div>
+                                     <div class="form-group">
+                                <h5 class="card-title" for="cash_account">From:</h5>
+                                <input type="date" class="form-control" th:field="*{date_start}"
+                                       placeholder="YYYY-MM-DD">
+                            </div>
+                                     <div class="form-group">
+                                    <h5 class="card-title" for="receivable_account">To:</h5>
+                                    <input type="date" class="form-control" th:field="*{date_end}"
+                                       placeholder="YYYY-MM-DD">
+                            </div>
+                                     <button type="submit" class="btn btn-success mr-2">
+                                    request
+                                </button>
+                                    </form>
+
+                                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

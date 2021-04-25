@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html layout:decorator="adminLayout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>IFRS System</title><!-- Latest compiled and minified CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <div class="card-body">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i class="mdi mdi-account text-info icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">Total Accountants</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-bold text-right mb-0" th:text="${totalAccountant}"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-info mt-3 mb-0">
+                        <i aria-hidden="true" class="mdi mdi-information mr-1"></i> There are <span th:text="${totalAccountant}"> </span> Registered ACCOUNTANTS
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <div class="card-body">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i class="mdi mdi-check text-info icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">Total Reviewers</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-bold text-right mb-0" th:text="${totalReviewer}"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-info mt-3 mb-0">
+                        <i aria-hidden="true" class="mdi mdi-information-outline mr-1"></i> there are <span th:text="${totalReviewer}"> </span> Registered
+                        REVIEWERS
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+                <div class="card-body">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <i class="mdi mdi-cube  text-info  icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                            <p class="mb-0 text-right">ENTITIES</p>
+                            <div class="fluid-container">
+                                <h3 class="font-weight-bold text-right mb-0" th:text="${totalEntity}"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-info mt-3 mb-0">
+                        <i aria-hidden="true" class="mdi mdi-alert-octagon mr-1"></i> <span th:text="${totalEntity}"> </span> Companies
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="clearfix">
+                <div class="text-info mt-3 mb-0">
+                    <h2 class="mb-0 text-center"> Notifications</h2>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row" >
+                <div class="col-lg-4 col-md-4" th:each="user1 : ${userRequest}">
+                    <div class="card" style="padding: 10px; margin-top: 25px">
+                        <div class="card-header" style="height: 60px">
+                            <h3 class="subtitle has-text-grey has-text-right" >
+                                <a th:href="@{/admin/AccountantList/{user_id} (user_id=${user1.user_id})}" style="text-decoration: none; color: black">
+                                    <span class="icon" th:text="${user1.firstName}"></span> <span class="icon" th:text="${user1.lastName}"></span>
+                                    <i class="mdi mdi-account text-info icon-lg"></i>
+                                </a>
+                                </h3>
+                        </div>
+                        <div class="card-content">
+                            <!--                        <p class="title">Request for accounting account</p>-->
+                            <div th:if="${user1.roles.toString().contains(ROLE_USER)}">Request for accounting account</div>
+                            <div th:unless="${user1.roles.toString().contains(ROLE_USER)}">Request for Reviewer account</div>
+
+                        </div>
+                        <footer class="card-footer center">
+                            <a class="btn btn-success has-text-warning-dark has-text-centered"
+                               th:href="@{/{user_id}/accept (user_id=${user1.user_id})}">Accept</a>
+                            <a class="btn btn-danger has-text-info has-text-centered"
+                               th:href="@{/{user_id}/reject (user_id=${user1.user_id})}">Reject</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</body>
+
+</html>

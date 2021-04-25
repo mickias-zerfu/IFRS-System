@@ -1,0 +1,66 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 16 - 12 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<script>
+    function validateForm(){
+        let fromDate=document.registerForm.from.value;
+        let toDate=document.registerForm.to.value;
+        let errorDate=document.getElementById("errorDate")
+        if (toDate<fromDate){
+            errorDate.innerHTML="the Dates are not ordered";
+            return false;
+        }
+    }
+</script>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-6 grid-margin">
+            <div class="card">
+                <div class="card-header" style="background: white">
+                    <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Reporting</h3>
+                </div>
+                <div class="card-body">
+                    <fieldset>
+                        <form class="forms-sample" id="report" method="post"
+                              name="registerForm"
+                              onsubmit="return validateForm()" th:action="@{/{entity_id}/report (entity_id=${entity_id})}" th:object="${report}">
+
+                            <div class="form-group">
+                                <h5 class="card-title" for="cash_account">From:</h5>
+                                <input class="form-control" name="from" placeholder="YYYY-MM-DD" required="required"
+                                       th:field="*{date_start}" type="date">
+                            </div>
+                            <div class="form-group">
+                                <h5 class="card-title" for="receivable_account">To:</h5>
+                                <input class="form-control" name="to" placeholder="YYYY-MM-DD" required="required"
+                                       th:field="*{date_end}" type="date"><span id="errorDate"></span>
+                            </div>
+
+                            <div class="form-group" style="padding-top: 10px">
+                                <button class="btn btn-success mr-2" type="submit">
+                                    Generate Report
+                                </button>
+                            </div>
+
+                        </form>
+                    </fieldset>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

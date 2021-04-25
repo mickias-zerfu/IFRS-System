@@ -1,0 +1,139 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 12 - 1 - 2021
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+
+
+    <h4>Invoice <span th:text="${bill_id}"></span></h4>
+    <fieldset style="border: none">
+        <form class="forms-sample"
+              th:object="${bill}" method="post" >
+            <div class="row">
+
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Bill Info.</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Bill amount: </label>
+                                <label th:text="${bill.amount_due}"></label>
+                            </div>
+                            <div class="form-group">
+                                <lable>Due :</lable>
+                                <label th:text="${bill.due_date}"></label>
+                            </div>
+                            <div class="form-group" >
+                                <label style="color: lightcoral; font-size: large" >You owe:  </label>
+                                <label th:text="${bill.amount_unearned}" style="color: lightcoral; font-size: large"></label>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount paid: </label>
+                                <label th:text="${bill.amount_paid}"></label>
+                            </div>
+                            <label>Progress: </label>
+                            <label th:text="${bill.progress}"></label><span> %</span>
+                            <div class="progress">
+                                <div id="myBar" class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                     role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <script>
+                                window.onload = function () {
+                                    var elem = document.getElementById("myBar");
+                                    elem.style.width = [[${bill.progress}]] + '%';
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 grid-margin">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Bill Transactions</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Account Name
+                                    </th>
+                                    <th>
+                                        Credit
+                                    </th>
+                                    <th>
+                                        Debit
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="transaction : ${transactions}">
+                                    <td th:text="${transaction.created}"></td>
+                                    <td th:text="${transaction.account_id}"></td>
+                                    <!--                                    th:text="${potentially_complex_expression} ? 'Hello' : 'Something else'"-->
+                                    <td th:text="${transaction.tx_type == 'credit'}? ${transaction.amount}:'-'"></td>
+                                    <td th:text="${transaction.tx_type == 'debit'}? ${transaction.amount}:'-'"></td>
+                                    <!--                                    <td th:if="${transaction.tx_type == 'debit'}"><p-->
+                                    <!--                                            th:text="${transaction.amount}"></p></td>-->
+                                    <td th:text="${transaction.description}"></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td><b>Total</b></td>
+                                    <td></td>
+                                    <td th:text="${credit}"></td>
+                                    <td th:text="${debit}"></td>
+                                    <td></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 grid-margin">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Vendor Information</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <h3 th:text="${vendor.vendor_name}"></h3>
+                            <p th:text="${vendor.address_1}"></p>
+                            <p th:text="${vendor.address_2}"></p>
+                            <p th:text="${vendor.phone}"></p>
+                            <p th:text="${vendor.email}"></p>
+                            <p th:text="${vendor.website}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+</section>
+</body>
+
+
+</html>

@@ -1,0 +1,134 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 7 - 1 - 2021
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Journal Entries</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Action
+                                </th>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Activity
+                                </th>
+                                <th>
+                                    JE Date
+                                </th>
+                                <th>
+                                    Posted
+                                </th>
+                                <th>
+                                    Locked
+                                </th>
+                                <th>
+                                    Created
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="je : ${jes}">
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary">Action</button>
+                                        <div class="dropdown-content">
+                                            <a href="#">Detail</a>
+                                            <a th:href="@{/{entity_id}/ledger/{je_id} (entity_id=${entity_id}, je_id=${je.je_id})}">TXs</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td ></td>
+                                <td th:text="${je.description}"></td>
+                                <td th:text="${je.activity}"></td>
+                                <td th:text="${je.date}"></td>
+                                <td th:text="${je.posted}"></td>
+                                <td th:text="${je.locked}"></td>
+                                <td th:text="${je.created}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>
+

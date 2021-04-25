@@ -1,0 +1,94 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 30 - 12 - 2020
+  -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-header" style="background: white">
+                    <a th:href="@{/{entity_id}/addAccount (entity_id=${entity_id})}"
+                       class="btn btn-success btn-sm"  role="button">Create Account</a>
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title">Chart of Accounts</h4>
+                    <p class="card-description">
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Role
+                                </th>
+                                <th>
+                                    Code
+                                </th>
+                                <th>
+                                    Account Name
+                                </th>
+                                <th>
+                                    Balance Type
+                                </th>
+                                <th>
+                                    Active
+                                </th>
+                                <th>
+                                    Locked
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="account : ${accounts}">
+                                <td th:text="${account.role}"></td>
+                                <td th:text="${account.code}"></td>
+                                <td th:text="${account.name}"></td>
+                                <td th:text="${account.balance_type}"></td>
+                                <td th:text="${account.active}"></td>
+                                <td th:text="${account.locked}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>
+

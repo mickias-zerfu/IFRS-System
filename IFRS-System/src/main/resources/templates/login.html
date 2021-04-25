@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="newLayout">
+<head>
+    <title>IFRS Systems</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row" >
+        <div class="col-lg-7 grid-margin stretch-card" style="margin: auto" >
+            <!--weather card-->
+            <div class="card card-weather3">
+                <div class="card-body">
+
+                    <form class="forms-sample" th:action="@{/perform-login}" method="post">
+                        <div th:if="${loginError}">
+                            <div class="alert alert-danger">Invalid username or
+                                password.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Email address</label>
+                            <input type="email" id="username" name="username" class="form-control"
+                                   autofocus="autofocus" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Password">
+                            <a style="text-decoration: none; font-size: 12px" th:href="@{/forget}">forget password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2" style="align-self: center">login</button>
+                    </form>
+
+                </div>
+            </div>
+            <!--weather card ends-->
+        </div>
+    </div>
+
+
+</section>
+</body>
+</html>

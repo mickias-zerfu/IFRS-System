@@ -1,0 +1,123 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 1 - 1 - 2021
+  -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="entitiesLayout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<script>
+    function validateForm() {
+        let email = document.registerForm.email.value;
+        let emailError = document.getElementById("emailError");
+        var atposition = email.indexOf("@");
+        var dotposition = email.lastIndexOf(".");
+        if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+            emailError.innerHTML = "Please enter a valid e-mail address \n atpostion:" + atposition + "\n dotposition:" + dotposition;
+            return false;
+        }
+    }
+</script>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card" style="margin: auto">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" onsubmit="return validateForm()" id="addEntity" th:action="@{/editEntity/{entity_id}(entity_id=${entity_id})}"
+                          th:object="${entity}" method="post">
+                        <h4 class="card-title" id="here"><p th:text="${entity.name}"></p></h4>
+                        <div class="form-group">
+                            <label for="name">Entity Name:</label>
+                            <input type="text" id="name" class="form-control" th:field="*{name}"
+                                   value=th:text="${entity.name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address_1">Address Line 1</label>
+                            <input type="text" id="address_1" class="form-control" th:field="*{address_1}"
+                                   value=th:text="${entity.address_1}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address_2">Address Line 2</label>
+                            <input type="text" id="address_2" class="form-control" th:field="*{address_2}"
+                                   value=th:text="${entity.address_2}">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" class="form-control" th:field="*{city}"
+                                   value=th:text="${entity.city}">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" class="form-control" th:field="*{state}"
+                                   value=th:text="${entity.state}">
+                        </div>
+                        <div class="form-group">
+                            <label for="zip_code">Zip Code</label>
+                            <input type="text" id="zip_code" class="form-control" th:field="*{zip_code}"
+                                   value=th:text="${entity.zip_code}">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" class="form-control" th:field="*{country}"
+                                   value=th:text="${entity.country}">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" id="phone" class="form-control" th:field="*{phone}"
+                                   value=th:text="${entity.phone}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input class="form-control" id="email" name="email" required="required" th:field="*{email}"
+                                   type="email" value=th:text="${entity.email}">
+                            <span class="alert-danger" id="emailError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Web site</label>
+                            <input type="text" id="website" class="form-control" th:field="*{website}"
+                                   value=th:text="${entity.website}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Submit
+                            </button>
+                            <button class="btn btn-light">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function addNewRow(myTable) {
+            var table = document.getElementById(myTable);
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].outerHTML;
+            table.innerHTML = table.innerHTML + row;
+            var row = table.getElementsByTagName('tr');
+            var row = row[row.length - 1].getElementsByTagName('td');
+            for (i = 0; i < row.length; i++) {
+                row[i].innerHTML = '';
+            }
+        }
+
+        function deleteRow(tblId) {
+            var table = document.getElementById(tblId);
+            var row = table.getElementsByTagName('tr');
+            if (row.length != '1') {
+                row[row.length - 1].outerHTML = '';
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>

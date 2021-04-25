@@ -1,0 +1,107 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 22 - 8 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Order information</h4>
+                    <form class="forms-sample" id="customerEdit" th:action="@{/customerEdit/{customer_id}(customer_id=${id})}"
+                           th:object="${order}" method="post" th:method="post">
+                        <div class="form-group">
+                            <label for="customer_name">Customer Name</label>
+                            <input type="text" id="customer_name" class="form-control" th:field="*{customer_name}"
+                                   value=th:text="${customer_name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="orderDate">Order Date</label>
+                            <input type="text" id="orderDate" class="form-control" th:field="*{orderDate}"
+                                   value=th:text="${order.order_date}">
+                        </div>
+                        <div class="form-group">
+                            <label for="shipmentDate">Shipment Date</label>
+                            <input type="text" id="shipmentDate" class="form-control" th:field="*{shipmentDate}"
+                                   value=th:text="${order.shipment_date}">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Product
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Unit Price
+                                    </th>
+                                    <th>
+                                        Tax
+                                    </th>
+                                    <th>
+                                        Ammount
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="orderProduct : ${orderProducts}" th:each="orderProductQuantity : ${orderProductsQuantity}">
+                                    <td th:text="${orderProduct.name}"><input type="text"></td>
+                                    <td th:text="${orderProductQuantity.quantity}"><input type="text"></td>
+                                    <td th:text="${orderProduct.unit_price}"><input type="text"></td>
+                                    <td th:text="${orderProduct.tax}"><input type="text"></td>
+                                    <td th:text="${custom.phone}"><input type="text"></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td style="border: none"></td>
+                                    <td style="border: none"></td>
+                                    <td style="border: none"></td>
+                                    <td>Sales Tax</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none"></td>
+                                    <td style="border: none"></td>
+                                    <td style="border: none"></td>
+                                    <td>freight</td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none"></td>
+                                    <td style="border: none"></td>
+                                    <td style="border: none"></td>
+                                    <td>Sales order total</td>
+                                    <td></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Update
+                            </button>
+                            <button class="btn btn-light" th:href="@{/userPages/customerSale}">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

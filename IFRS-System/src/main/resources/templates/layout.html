@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>IFRS System</title>
+    <link rel="stylesheet" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.addons.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/fontawesome-free/css/all.css}">
+    <!-- Ionicons -->
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}"/>
+
+</head>
+
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+            <a class="navbar-brand brand-logo" th:href="@{/entities}">
+                <img th:src="@{/images/newLogo.png}" alt="logo"/>
+            </a>
+            <a class="navbar-brand brand-logo-mini" th:href="@{entities}">
+                <img th:src="@{/images/mini.png}" alt="logo"/>
+            </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center">
+
+            <ul class="navbar-nav navbar-nav-right">
+                <ul class="navbar-nav ml-auto">
+                </ul>
+                <li class="nav-item dropdown d-none d-xl-inline-block">
+                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
+                       aria-expanded="false">
+                        <span class="profile-text">Hello, <span th:text="${firstName}"></span> !</span>
+                        <img class="img-xs rounded-circle" th:src="'data:image/jpeg;base64,' + ${image}"
+                             alt="Profile image">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                        <a class="dropdown-item mt-2" th:href="@{/userEdit/{user_id}(user_id=${user_id})}">
+                            Manage Account
+                        </a>
+                        <a class="dropdown-item" th:href="@{/logout}">
+                            Sign Out
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item nav-profile">
+                    <div class="nav-link">
+                        <div class="user-wrapper">
+                            <div class="profile-image">
+                                <img class="img-thumbnail" th:src="'data:image/jpeg;base64,' + ${image}"
+                                     alt="profile image">
+                            </div>
+                            <div class="text-wrapper">
+                                <p class="profile-name"><span th:text="${firstName}"></span></p>
+                                <div>
+                                    <small class="designation text-muted"><span th:text="${role}"></span></small>
+                                    <span class="status-indicator online"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <a th:href="@{/{entity_id}/report (entity_id=${entity_id})}"
+                           class="btn btn-success btn-sm" role="button">New Report<i class="mdi mdi-plus"></i></a>
+                    </div>
+                </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}(entity_id=${entity_id})}" style="color: black">
+                            <i class="menu-icon mdi mdi-television"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}/customer (entity_id=${entity_id})}"
+                           style="color: black">
+                            <span class="menu-title" style="padding-left: 30px">Customers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}/vendor (entity_id=${entity_id})}"
+                           style="color: black">
+                            <span class="menu-title" style="padding-left: 30px">Vendors</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}/invoice (entity_id=${entity_id})}"
+                           style="color: black">
+                            <span class="menu-title" style="padding-left: 30px">Invoices</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}/bill (entity_id=${entity_id})}"
+                           style="color: black">
+                            <span class="menu-title" style="padding-left: 30px">Bills</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}/ledger (entity_id=${entity_id})}"
+                           style="color: black">
+                            <span class="menu-title" style="padding-left: 30px">Ledger</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/{entity_id}/coa (entity_id=${entity_id})}" style="color: black">
+                            <span class="menu-title" style="padding-left: 30px">Chart of Accounts</span>
+                        </a>
+                    </li>
+            </ul>
+        </nav>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper" layout:fragment="content">
+                Content is Here!
+            </div>
+            <!-- content-wrapper ends -->
+
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <div class="container-fluid clearfix">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020
+              <a href="#" target="_blank">AASTU IFRS TEAM</a>. All rights reserved.</span>
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+
+    </div>
+
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/misc.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/Chart.js}"></script>
+<script th:src="@{/dist/Chart.js}"></script>
+<script th:src="@{/dist/utils.js}"></script>
+<script th:src="@{/dist/Chart.min.js}"></script>
+<script th:src="@{/js/canvasjs.min.js}"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        funApplicationDisabled();
+
+        funContactDisabled();
+
+        funProductDisabled();
+
+    });
+
+    function funApplicationDisabled() {
+        $('#app-input-service-id').prop('readOnly', true);
+        $('#app-input-name').prop('disabled', true);
+        $('#app-input-icon').prop('disabled', true);
+        $('#app-input-meta-desc').prop('disabled', true);
+        $('#app-input-meta-key').prop('disabled', true);
+        $('#app-input-meta-google-site').prop('disabled', true);
+        $('#app-btn-cancel').prop('disabled', true);
+        $('#app-btn-save').prop('disabled', true);
+        $('#app-btn-edit').prop('disabled', false);
+    }
+
+    function funContactDisabled() {
+        $('#contact-input-service-id').prop('readOnly', true);
+        $('#contact-name').prop('disabled', true);
+        $('#contact-phone').prop('disabled', true);
+        $('#contact-sms').prop('disabled', true);
+        $('#contact-hiMessage').prop('disabled', true);
+        $('#contact-address').prop('disabled', true);
+        $('#contact-email').prop('disabled', true);
+        $('#contact-btn-cancel').prop('disabled', true);
+        $('#contact-btn-save').prop('disabled', true);
+        $('#contact-btn-edit').prop('disabled', false);
+    }
+
+    function funProductDisabled() {
+        $('#product-input-uuid').prop('readOnly', true);
+        $('#product-input-name').prop('disabled', true);
+        $('#product-input-img-src').prop('disabled', true);
+        $('#product-input-img-alt').prop('disabled', true);
+        $('#product-input-href').prop('disabled', true);
+        $('#product-input-price').prop('disabled', true);
+        $('#product-input-brochure').prop('disabled', true);
+        $('#product-btn-cancel').prop('disabled', true);
+        $('#product-btn-save').prop('disabled', true);
+        $('#product-btn-edit').prop('disabled', false);
+    }
+
+    function printContent(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+
+    addEventListeners('#item44', 'change keyup paste click', e => {
+        var x = document.getElementById("item05").value + document.getElementById("item14").value
+            + document.getElementById("item24").value + document.getElementById("item34").value
+            + document.getElementById("item44").value;
+        document.getElementById("amountTotal").innerHTML = x;
+    });
+
+    addEventListeners('#item34', 'change keyup paste click', e => {
+        var x = document.getElementById("item05").value + document.getElementById("item14").value
+            + document.getElementById("item24").value + document.getElementById("item34").value
+            + document.getElementById("item44").value;
+        document.getElementById("amountTotal").innerHTML = x;
+    });
+
+    addEventListeners('#item24', 'change keyup paste click', e => {
+        var x = document.getElementById("item05").value + document.getElementById("item14").value
+            + document.getElementById("item24").value + document.getElementById("item34").value
+            + document.getElementById("item44").value;
+        document.getElementById("amountTotal").innerHTML = x;
+    });
+
+    addEventListeners('#item14', 'change keyup paste click', e => {
+        var x = document.getElementById("item05").value + document.getElementById("item14").value
+            + document.getElementById("item24").value + document.getElementById("item34").value
+            + document.getElementById("item44").value;
+        document.getElementById("amountTotal").innerHTML = x;
+    });
+
+    addEventListeners('#item05', 'change keyup paste click', e => {
+        var x = document.getElementById("item05").value + document.getElementById("item14").value
+            + document.getElementById("item24").value + document.getElementById("item34").value
+            + document.getElementById("item44").value;
+        document.getElementById("amountTotal").innerHTML = x;
+    });
+
+    function addEventListener(el, eventName, fn) {
+        el = typeof el === 'string' ? document.querySelector(el) : el;
+        el.addEventListener(eventName, fn);
+    }
+
+    function addEventListeners(el, events, fn) {
+        el = typeof el === 'string' ? document.querySelector(el) : el;
+        events.trim().split(/\s+/).forEach(eventName => addEventListener(el, eventName, fn));
+    }
+
+    function triggerEvent(el, eventName) {
+        el = typeof el === 'string' ? document.querySelector(el) : el;
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent(eventName, true, false);
+        el.dispatchEvent(event);
+    }
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 30 - 12 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+
+<script>
+    function validateForm() {
+        let regex  = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
+        let dollar = document.registerForm.dollar.value;
+        let dollarError = document.getElementById("dollarError");
+        if(!dollar.match(regex)){
+            dollarError.innerHTML="no string";
+            return false;
+        }
+    }
+</script>
+
+<div layout:fragment="content">
+
+    <div class="card-header" style="background: white">
+        <h3 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Create Bill</h3>
+        <script language="javascript">
+            var matchEnterdDate=0;
+            //function to set back date opacity for non supported browsers
+            window.onload =function(){
+                var input = document.createElement('input');
+                input.setAttribute('type','date');
+                input.setAttribute('value', 'some text');
+                if(input.value === "some text"){
+                    allDates = document.getElementsByClassName("xDateContainer");
+                    matchEnterdDate=1;
+                    for (var i = 0; i < allDates.length; i++) {
+                        allDates[i].style.opacity = "1";
+                    }
+                }
+            }
+            //function to convert enterd date to any format
+            function setCorrect(xObj,xTraget){
+                var date = new Date(xObj.value);
+                var month = date.getMonth();
+                var day = date.getDate();
+                var year = date.getFullYear();
+                if(month!='NaN'){
+                    document.getElementById(xTraget).value=day+" / "+month+" / "+year;
+                }else{
+                    if(matchEnterdDate==1){document.getElementById(xTraget).value=xObj.value;}
+                }
+            }
+        </script>
+    </div>
+    <fieldset>
+        <form class="forms-sample" onsubmit="return validateForm()" id="addBill" th:action="@{/{entity_id}/addBill (entity_id=${entity_id})}"
+              th:object="${newBill}" method="post">
+            <div class="row">
+                <div class="col-lg-6 grid-margin">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h4 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Vendor Information</h4>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" list="vendors_list" id="vendor" class="form-control" th:field="*{vendor}"
+                                   placeholder="Vendor Name...">
+                            <datalist id="vendors_list">
+                                <option th:each="vendor : ${vendors}">
+                                    <p th:text="${vendor}"></p>
+                                </option>
+                            </datalist>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header" style="background: white">
+                            <h4 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Bill Amount and Terms</h4>
+                        </div>
+                        <div class="card-body">
+                            <input type="number" id="xrn" class="form-control" th:field="*{xrn}"
+                                   required="required" placeholder="External Reference Number..." style="height: 50px; margin-bottom: 10px">
+                            <input type="date" id="bill_date" class="form-control" th:field="*{bill_date}"
+                                   required="required" placeholder="YYYY-MM-DD" style="height: 40px; margin-bottom: 8px">
+                            <input type="text" name="dollar" id="amount_due" class="form-control" th:field="*{amount_due}"
+                                   required="required" placeholder="$$$..." style="height: 30px; margin-bottom: 5px" ><span id="dollarError"></span>
+                            <h5 class="card-title">Terms</h5>
+                            <input type="text" list="term_list" id="terms" class="form-control" th:field="*{term}"
+                                   required="required" placeholder="--------">
+                            <datalist id="term_list">
+                                <option th:each="term : ${terms}">
+                                    <p th:text="${term}"></p></option>
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header" style="background: white">
+                        <h4 style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif">Connected Accounts</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <h5 class="card-title" for="cash_account">Cash Account</h5>
+                            <input type="text" list="cashAccount_list" id="cash_account" class="form-control"
+                                   th:field="*{cash_account}"
+                                   placeholder="Cash Account">
+                            <datalist id="cashAccount_list">
+                                <option th:each="cash_account : ${cash_accounts}">
+                                    <p th:text="${cash_account}"></p></option>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <h5 class="card-title" for="receivable_account">Receivable Account</h5>
+                            <input type="text" list="receivableAccount_list" id="receivable_account"
+                                   class="form-control" th:field="*{receivable_account}"
+                                   placeholder="Receivable Account">
+                            <datalist id="receivableAccount_list">
+                                <option th:each="receivable_account : ${receivable_accounts}">
+                                    <p th:text="${receivable_account}"></p></option>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <h5 class="card-title" for="payable_account">Payable Account</h5>
+                            <input type="text" list="payableAccount_list" id="payable_account" class="form-control"
+                                   th:field="*{payable_account}"
+                                   placeholder="Payable Account">
+                            <datalist id="payableAccount_list">
+                                <option th:each="payable_account : ${payable_accounts}">
+                                    <p th:text="${payable_account}"></p></option>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <h5 class="card-title" for="earning_account">Earning Account</h5>
+                            <input type="text" list="earningAccount_list" id="earning_account" class="form-control"
+                                   th:field="*{earning_account}"
+                                   placeholder="Earning Account">
+                            <datalist id="earningAccount_list">
+                                <option th:each="earning_account : ${earning_accounts}">
+                                    <p th:text="${earning_account}"></p></option>
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-top: 10px">
+                <button type="submit" class="btn btn-success mr-2">
+                    Create
+                </button>
+                <button class="btn btn-light">Cancel</button>
+            </div>
+
+        </form>
+    </fieldset>
+
+    </section>
+</div>
+</body>
+
+
+</html>

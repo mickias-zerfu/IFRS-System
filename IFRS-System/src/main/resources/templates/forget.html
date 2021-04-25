@@ -1,0 +1,40 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 23 - 1 - 2021
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="newLayout">
+<head>
+    <title>IFRS Systems</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row" >
+        <div class="col-lg-7 grid-margin stretch-card" style="margin: auto" >
+
+            <div class="card card-weather3">
+                <div class="card-body">
+
+                    <form class="forms-sample" th:action="@{/forget}" method="post" >
+
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" name="email" class="form-control" th:filed="${email}"
+                                   autofocus="autofocus" placeholder="Enter email">
+                        </div>
+                        <button type="submit" class="btn btn-success mr-2" style="align-self: center">report</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</section>
+</body>
+</html>

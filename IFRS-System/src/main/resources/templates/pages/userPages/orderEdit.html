@@ -1,0 +1,57 @@
+<!--
+  ~ Copyright (c) 2020
+  ~ Created by Eyob Amare on 22 - 8 - 2020
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Order information</h4>
+                    <form class="forms-sample" id="orderEdit" th:action="@{/orderEdit/{order_id}(order_id=${id})}"
+                           th:object="${order}" method="post" th:method="post">
+                        <div class="form-group">
+                            <label for="customer_name">Customer Id</label>
+                            <input type="text" id="customer_name" class="form-control" th:field="*{customer_id}"
+                                   value=th:text="${order.customer_id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="orderDate">Order Date</label>
+                            <input type="text" id="orderDate" class="form-control" th:field="*{order_date}"
+                                   value=th:text="${order.order_date}">
+                        </div>
+                        <div class="form-group">
+                            <label for="shipmentDate">Shipment Date</label>
+                            <input type="text" id="shipmentDate" class="form-control" th:field="*{shipment_date}"
+                                   value=th:text="${order.shipment_date}">
+                        </div>
+                        <div class="form-group">
+                            <label for="freight">Freight</label>
+                            <input type="text" id="freight" class="form-control" th:field="*{freight}"
+                                   value=th:text="${order.freight}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2">
+                                Update
+                            </button>
+                            <button class="btn btn-light" th:href="@{/userPages/customerSale}">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

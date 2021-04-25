@@ -1,0 +1,68 @@
+<!--
+  ~ Copyright (c) 2021
+  ~ Created by Eyob Amare on 23 - 1 - 2021
+  -->
+
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+       layout:decorator="layout">
+<head>
+    <title>IFRS System</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row ">
+        <form class="forms-sample" id="userEdit" th:action="@{/userEdit/{user_id}(user_id=${user_id})}"
+              th:object="${user}" method="post" th:method="post">
+            <div class="col-md-3 col-sm-12">
+                <a aria-label="Change Profile Picture"><img class="rounded-circle" style="height: 200px; width: 200px"
+                                                            th:src="'data:image/jpeg;base64,' + ${image}" alt="Profile image">
+                </a>
+            </div>
+            <div class="col-md-9 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Manage account</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" id="fname" class="form-control" th:field="*{firstName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" id="lname" class="form-control" th:field="*{lastName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Description</label>
+                            <textarea type="text" cols="80" rows="4" id="description" class="form-control"
+                                      th:field="*{description}"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">new Password</label>
+                            <input type="password" id="password" class="form-control" th:field="${ma.newP}"
+                                   placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-control"
+                                   th:field="${ma.cpass}" placeholder="Confirm Password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mr-2" onclick="singleUploadForm">
+                                Submit
+                            </button>
+                            <button class="btn btn-light">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+
+</html>

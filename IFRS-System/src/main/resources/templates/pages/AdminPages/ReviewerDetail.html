@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html layout:decorator="adminLayout" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>IFRS System</title><!-- Latest compiled and minified CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+</head>
+<body>
+<section layout:fragment="content">
+    <section>
+        <div class="top-container col">
+            <div class="row ">
+                <div class="col-md-3 col-sm-12">
+                    <img class="rounded-circle" style="height: 200px; width: 200px"
+                         th:src="'data:image/jpeg;base64,' + ${image1}"
+                         alt="Profile image">
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <div class="card">
+                        <div class="card-header" style="background-color: white;">
+                            <h3 style="font-family: sans-serif"><span th:text="${user.firstName}"></span> <span
+                                    th:text="${user.lastName}"></span></h3>
+                        </div>
+                        <div class="card-body">
+                            <span th:text="${user.description}"></span>
+                            <span th:if="${user.enabled == true}">
+                                <fieldset>
+                                <form class="forms-sample" id="approve"
+                                      th:action="@{/admin/approve/{user_id} (user_id=${user.user_id})}"
+                                      th:object="${request}" method="post">
+                                                    <p> Requested report of <span th:text="${request.entity_id}"><b></b></span></p>
+                                                    <label>from </label>
+                                                    <p th:text="${request.from_date}"></p>
+                                                    <label>to </label>
+                                                    <p th:text="${request.to_date}"></p>
+                                    <span th:if="${request.approve == true}">
+                                        <button type="submit" class="btn btn-danger mr-2">cancel</button>
+                                    </span>
+                                    <span th:unless="${request.approve == true}">
+                                        <button type="submit" class="btn btn-success mr-2">approve</button>
+                                    </span>
+                                </form>
+                                </fieldset>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <fieldset>
+                <form class="forms-sample" id="enableDisableAccount"
+                      th:action="@{/admin/enableDisable/{user_id} (user_id=${user.user_id})}"
+                      th:object="${user}" method="post">
+                    <div class="row ">
+                        <div class="col-md-3 col-sm-12">
+                            <div th:if="${user.approved == true}">
+                                <span th:if="${user.enabled == true}">
+                                    <button type="submit" class="btn btn-danger mr-2">Disable Account</button>
+                                </span>
+                                <span th:unless="${user.enabled == true}">
+                                    <button type="submit" class="btn btn-success mr-2">Enable Account</button>
+                                </span>
+                            </div>
+                            <div th:unless="${user.approved == true}">
+                                <a class="btn btn-success has-text-warning-dark has-text-centered"
+                                   th:href="@{/{user_id}/accept (user_id=${user.user_id})}">Accept</a>
+                                <a class="btn btn-danger has-text-info has-text-centered"
+                                   th:href="@{/{user_id}/reject (user_id=${user.user_id})}">Reject</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+    </section>
+</section>
+
+</body>
+</html>
